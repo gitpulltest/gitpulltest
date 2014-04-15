@@ -9,6 +9,9 @@ public class App {
         int k = 1;
         int n = 1;
         System.out.println( "Hello World!" );
+        if ( true ){
+            System.out.println();
+        }
     }
 
 }
