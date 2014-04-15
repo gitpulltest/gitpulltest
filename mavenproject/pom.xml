@@ -12,7 +12,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <qa.failOnError>true</qa.failOnError>
+        <checkstyle.maxViolation>1</checkstyle.maxViolation>
     </properties>
+
 
     <dependencies>
         <dependency>
@@ -121,7 +124,7 @@
         <profile>
             <id>codeQuality</id>
             <properties>
-                <qa.failOnError>false</qa.failOnError>
+                <qa.failOnError>true</qa.failOnError>
             </properties>
             <build>
                 <plugins>
@@ -172,7 +175,7 @@
                         <configuration>
                             <outputDirectory>${project.build.directory}/checkstyle</outputDirectory>
                             <targetDirectory>${project.build.directory}</targetDirectory>
-                            <!--failOnViolation>${qa.failOnError}</failOnViolation -->
+                            <failOnViolation>${qa.failOnError}</failOnViolation>
                             <maxAllowedViolations>${checkstyle.maxViolation}</maxAllowedViolations>
                             <configLocation>${project.basedir}/qa-rulesets/checkstyle/msm_checks.xml</configLocation>
                             <suppressionsLocation>${project.basedir}/qa-rulesets/checkstyle/msm_suppressions.xml</suppressionsLocation>
