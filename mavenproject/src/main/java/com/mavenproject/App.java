@@ -10,7 +10,7 @@ public class App {
     static int b = 1;
     
     public static void main(final String[] args) {
-        int j = 1;
+        int j = 2;
         b = b = 1;
         System.out.println( "Hello World!" );
         if ( true ){
