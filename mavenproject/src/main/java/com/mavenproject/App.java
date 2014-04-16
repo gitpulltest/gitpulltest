@@ -10,7 +10,6 @@ public class App {
     static int b = 1;
     
     public static void main(final String[] args) {
-        int i = 1;
         int j = 1;
         b = b = 1;
         System.out.println( "Hello World!" );
