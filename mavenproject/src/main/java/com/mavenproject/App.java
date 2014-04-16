@@ -26,4 +26,18 @@ public class App {
         l.removeAll(l);
     }
 
+    @Override
+    public int hashCode(){
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals( Object obj ){
+        final App other = (App)obj;
+        return true;
+    }
+
+    
+    
 }
