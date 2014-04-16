@@ -1,0 +1,13 @@
+Downloaded: http://repo.maven.apache.org/maven2/com/puppycrawl/tools/checkstyle/5.7/checkstyle-5.7.jar (645 KB at 96.1 KB/sec)
+Downloaded: http://repo.maven.apache.org/maven2/com/google/guava/guava-jdk5/14.0.1/guava-jdk5-14.0.1.jar (1957 KB at 120.0 KB/sec)
+[INFO] Starting audit...
+C:\Program Files (x86)\Jenkins\jobs\pull request test\workspace\mavenproject\src\main\java\com\mavenproject\App.java:4:1: warning: Utility classes should not have a public or default constructor.
+C:\Program Files (x86)\Jenkins\jobs\pull request test\workspace\mavenproject\src\main\java\com\mavenproject\App.java:11:28: warning: '(' is followed by whitespace.
+C:\Program Files (x86)\Jenkins\jobs\pull request test\workspace\mavenproject\src\main\java\com\mavenproject\App.java:11:43: warning: ')' is preceded with whitespace.
+C:\Program Files (x86)\Jenkins\jobs\pull request test\workspace\mavenproject\src\main\java\com\mavenproject\App.java:12:13: warning: '(' is followed by whitespace.
+C:\Program Files (x86)\Jenkins\jobs\pull request test\workspace\mavenproject\src\main\java\com\mavenproject\App.java:12:18: warning: ')' is preceded with whitespace.
+C:\Program Files (x86)\Jenkins\jobs\pull request test\workspace\mavenproject\src\main\java\com\mavenproject\App.java:12:20: warning: '{' is not preceded with whitespace.
+Audit done.
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
