@@ -26,7 +26,7 @@
         </dependency>
     </dependencies>
   
-    <reporting>
+<!--    <reporting>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -90,11 +90,11 @@
                 </configuration>
             </plugin>
         </plugins>
-    </reporting>
+    </reporting>-->
   
   
     <profiles>
-        <profile>
+<!--        <profile>
             <id>itest</id>
             <properties>
                 <qa.failOnError>false</qa.failOnError>
@@ -120,7 +120,7 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile>-->
         <profile>
             <id>codeQuality</id>
             <properties>
@@ -131,7 +131,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-pmd-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.1</version>
                         <configuration>
                             <outputDirectory>${project.build.directory}/pmd</outputDirectory>
                             <targetDirectory>${project.build.directory}</targetDirectory>
@@ -185,7 +185,7 @@
                         </configuration>
                     </plugin>-->
                     
-<!--                    <plugin>
+                    <!--                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-checkstyle-plugin</artifactId>
                         <version>2.11</version>
@@ -213,32 +213,32 @@
                     
                     
                     <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.12</version>
-                    <configuration>
-                        <!--<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
-                        <configLocation>${project.basedir}/qa-rulesets/checkstyle/msm_checks.xml</configLocation>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>checkstyle-check</id>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                            <phase>verify</phase>  <!--  Default is "verify" -->
-                            <configuration>
-                                <consoleOutput>true</consoleOutput>
-                                <!--<violationSeverity>warning</violationSeverity>-->
-<!--                                <failOnViolation>true</failOnViolation>
-                                <failsOnError>true</failsOnError>-->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>2.12</version>
+                        <configuration>
+                            <!--<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+                            <configLocation>${project.basedir}/qa-rulesets/checkstyle/msm_checks.xml</configLocation>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>checkstyle-check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>verify</phase>  <!--  Default is "verify" -->
+                                <configuration>
+                                    <consoleOutput>true</consoleOutput>
+                                    <!--<violationSeverity>warning</violationSeverity>-->
+                                    <!--                                <failOnViolation>true</failOnViolation>
+                                    <failsOnError>true</failsOnError>-->
                                 
-                                <linkXRef>true</linkXRef>
-                                <enableRulesSummary>true</enableRulesSummary>  
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>   
+                                    <linkXRef>true</linkXRef>
+                                    <enableRulesSummary>true</enableRulesSummary>  
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>   
                     
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -254,12 +254,16 @@
                                 <packageLineRate>0</packageLineRate>
                                 <packageBranchRate>0</packageBranchRate>
                             </check>
+                            <formats>
+				<!--<format>html</format>-->
+				<format>xml</format>
+                            </formats>
                         </configuration>
                         <executions>
                             <execution>
+                                <phase>package</phase>
                                 <goals>
-                                    <goal>clean</goal>
-                                    <goal>check</goal>
+                                    <goal>cobertura</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -267,22 +271,81 @@
                     
                     
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-site-plugin</artifactId>
-                        <version>3.3</version>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                        <version>2.5.3</version>
                         <configuration>
-                            <reportPlugins>
-                                <plugin>
-                                    <groupId>org.codehaus.mojo</groupId>
-                                    <artifactId>findbugs-maven-plugin</artifactId>
-                                    <version>2.3.1</version>
-                                    <configuration>
-                                        <effort>Max</effort>
-                                        <xmlOutput>true</xmlOutput>
-                                    </configuration>
-                                </plugin>
-                            </reportPlugins>
+                            <!--
+                                Enables analysis which takes more memory but finds more bugs.
+                                If you run out of memory, changes the value of the effort element
+                                to 'Low'.
+                            -->
+                            <effort>Max</effort>
+                            <!-- Build doesn't fail if problems are found -->
+                            <failOnError>false</failOnError>
+                            <!-- Reports all bugs (other values are medium and max) -->
+                            <threshold>Low</threshold>
+                            <!-- Produces XML report -->
+                            <xmlOutput>true</xmlOutput>
+                            <!-- Configures the directory in which the XML report is created -->
+                            <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
                         </configuration>
+                        <executions>
+                            <!--
+                                Ensures that FindBugs inspects source code when project is compiled.
+                            -->
+                            <execution>
+                                <id>analyze-compile</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>xml-maven-plugin</artifactId>
+                        <version>1.0</version>
+                        <configuration>
+                            <transformationSets>
+                                <transformationSet>
+                                    <!-- Configures the source directory of XML files. -->
+                                    <dir>${project.build.directory}/findbugs</dir>
+                                    <!-- Configures the directory in which the FindBugs report is written.-->
+                                    <outputDir>${project.build.directory}/findbugs</outputDir>
+                                    <!-- Selects the used stylesheet. -->
+                                    <!-- <stylesheet>fancy-hist.xsl</stylesheet> -->
+                                    <stylesheet>default.xsl</stylesheet>
+                                    <!--<stylesheet>plain.xsl</stylesheet>-->
+                                    <!--<stylesheet>fancy.xsl</stylesheet>-->
+                                    <!--<stylesheet>summary.xsl</stylesheet>-->
+                                    <fileMappers>
+                                        <!-- Configures the file extension of the output files. -->
+                                        <fileMapper
+                                            implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+                                            <targetExtension>.html</targetExtension>
+                                        </fileMapper>
+                                    </fileMappers>
+                                </transformationSet>
+                            </transformationSets>
+                        </configuration>
+                        <executions>
+                            <!-- Ensures that the XSLT transformation is run when the project is compiled. -->
+                            <execution>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>transform</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.google.code.findbugs</groupId>
+                                <artifactId>findbugs</artifactId>
+                                <version>2.0.3</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                     
                 </plugins>
