@@ -13,7 +13,7 @@ public class App {
         int i = 1;
         int j = 1;
         int jk = 1;
-        b = b = 4;
+        b = b = 5;
         System.out.println( "Hello World!" );
         if ( true ){
             System.out.println();
